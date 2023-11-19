@@ -1,0 +1,2 @@
+User-agent: *
+#EHC{Robots_txt_can_be_useful_in_many_case}

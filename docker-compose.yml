@@ -1,0 +1,58 @@
+version: '3'
+services:
+  cookie:
+    build:
+      context: ./cookie
+    image: cookie
+    ports:
+      - "30003:80"
+    restart: always
+  ctrlU:
+    build:
+      context: ./CtrlU
+    image: controlu
+    ports:
+      - "30004:80"
+    restart: always
+  dirsearch:
+    build:
+      context: ./dirsearch
+    image: dirsearch
+    ports:
+      - "30005:80"
+    restart: always
+  robots:
+    build:
+      context: ./robots
+    image: robots
+    ports:
+      - "30001:80"
+    restart: always
+  sqli:
+    build:
+      context: ./sqli
+    image: sqli
+    ports:
+      - "30002:80"
+    volumes:
+      - ./sqli/src:/var/www/html
+    environment:
+      MYSQL_HOST: localhost
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ""
+      MYSQL_DATABASE: ehcExpertise
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+    networks:
+      - local
+    restart: always
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+    volumes:
+      - ./sqli/db.sql:/docker-entrypoint-initdb.d/data.sql
+    networks:
+      - local
+    restart: always
+networks:
+  local:
