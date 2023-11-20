@@ -1,10 +1,4 @@
-FROM ubuntu:latest
+FROM php:8.2.4-apache-bullseye
 
-RUN apt-get update
-RUN apt-get install -y apache2
-
-COPY ./src /var/www/html/
-
-EXPOSE 80
-
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+RUN docker-php-ext-install mysqli
+RUN docker-php-ext-enable mysqli
